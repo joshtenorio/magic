@@ -8,7 +8,9 @@ import {
 } from '@tanstack/react-router'
 
 import "@/styles/app.css"
-
+import { Navbar } from '@/components/navbar'
+import { Separator } from '@/components/ui/separator'
+import { ThemeProvider } from '@/components/theme-provider'
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -30,7 +32,11 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
+    <div className='space-y-2'>
+    <Navbar />
+      <Separator />
       <Outlet />
+    </div>
     </RootDocument>
   )
 }
@@ -38,6 +44,7 @@ function RootComponent() {
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html>
+        <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
       <head>
         <HeadContent />
       </head>
@@ -45,6 +52,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         {children}
         <Scripts />
       </body>
+      </ThemeProvider>
     </html>
   )
 }
