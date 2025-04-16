@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as DrawImport } from './routes/draw'
+import { Route as DecksImport } from './routes/decks'
+import { Route as CollectionImport } from './routes/collection'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -19,6 +21,18 @@ import { Route as IndexImport } from './routes/index'
 const DrawRoute = DrawImport.update({
   id: '/draw',
   path: '/draw',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DecksRoute = DecksImport.update({
+  id: '/decks',
+  path: '/decks',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CollectionRoute = CollectionImport.update({
+  id: '/collection',
+  path: '/collection',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,6 +53,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/collection': {
+      id: '/collection'
+      path: '/collection'
+      fullPath: '/collection'
+      preLoaderRoute: typeof CollectionImport
+      parentRoute: typeof rootRoute
+    }
+    '/decks': {
+      id: '/decks'
+      path: '/decks'
+      fullPath: '/decks'
+      preLoaderRoute: typeof DecksImport
+      parentRoute: typeof rootRoute
+    }
     '/draw': {
       id: '/draw'
       path: '/draw'
@@ -53,36 +81,46 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/collection': typeof CollectionRoute
+  '/decks': typeof DecksRoute
   '/draw': typeof DrawRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/collection': typeof CollectionRoute
+  '/decks': typeof DecksRoute
   '/draw': typeof DrawRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/collection': typeof CollectionRoute
+  '/decks': typeof DecksRoute
   '/draw': typeof DrawRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/draw'
+  fullPaths: '/' | '/collection' | '/decks' | '/draw'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/draw'
-  id: '__root__' | '/' | '/draw'
+  to: '/' | '/collection' | '/decks' | '/draw'
+  id: '__root__' | '/' | '/collection' | '/decks' | '/draw'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CollectionRoute: typeof CollectionRoute
+  DecksRoute: typeof DecksRoute
   DrawRoute: typeof DrawRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CollectionRoute: CollectionRoute,
+  DecksRoute: DecksRoute,
   DrawRoute: DrawRoute,
 }
 
@@ -97,11 +135,19 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/collection",
+        "/decks",
         "/draw"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/collection": {
+      "filePath": "collection.tsx"
+    },
+    "/decks": {
+      "filePath": "decks.tsx"
     },
     "/draw": {
       "filePath": "draw.tsx"
