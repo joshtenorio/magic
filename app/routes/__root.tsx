@@ -32,19 +32,18 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-    <div className='space-y-2'>
+        <div className='space-y-2'>
     <Navbar />
       <Separator />
       <Outlet />
     </div>
-    </RootDocument>
+      </RootDocument>
   )
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html>
-        <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
       <head>
         <HeadContent />
       </head>
@@ -52,7 +51,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         {children}
         <Scripts />
       </body>
-      </ThemeProvider>
     </html>
   )
 }
