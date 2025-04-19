@@ -5,13 +5,16 @@ import {
   createRootRoute,
   HeadContent,
   Scripts,
+  createRootRouteWithContext,
 } from "@tanstack/react-router";
-
+import { QueryClient } from "@tanstack/react-query";
 import "@/styles/app.css";
 import { Navbar } from "@/components/navbar";
 import { Separator } from "@/components/ui/separator";
 import { ThemeProvider } from "@/components/theme-provider";
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
       {
