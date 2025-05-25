@@ -2,7 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { postCacheRequest } from "@/server/actions";
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 export const Route = createFileRoute("/draw")({
@@ -60,6 +62,7 @@ interface MTGCardProps {
   card: any;
 }
 function MTGCard(props: MTGCardProps) {
+  const postCache = useServerFn(postCacheRequest);
   return (
     <Card className="flex flex-row space-x-2 p-2">
       <CardHeader className="flex-grow">
@@ -84,6 +87,20 @@ function MTGCard(props: MTGCardProps) {
 
         <Button>Add nonfoil to collection</Button>
         <Button>Add foil to collection</Button>
+        <Button
+          variant={"outline"}
+          onClick={() =>
+            postCache({
+              data: {
+                card: props.card,
+                set: props.card.set,
+                number: props.card.collector_number,
+              },
+            })
+          }
+        >
+          Cache the child
+        </Button>
       </div>
       <img
         src={props.card.image_uris.png}
